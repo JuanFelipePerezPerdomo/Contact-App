@@ -1,7 +1,8 @@
 import { Button, Card, Input } from "@/src/components/ui";
-import { useTheme } from "@/src/hooks/useTheme";
+import { useTheme } from "@/src/hooks";
 import { Spacing, Typography } from "@/src/theme";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Link } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
@@ -109,6 +110,14 @@ export default function signin(){
                     fullWidth
                     size="large"
                 />
+                 <View style={styles.footer}>
+                    <Text style={styles.footerText}>
+                    ¿No tienes una cuenta?{' '}
+                    <Link href="/signup">
+                        <Text style={styles.linkText}>Regístrate</Text>
+                    </Link>
+                    </Text>
+                </View>
             </Card>
         </KeyboardAvoidingView>
     );
@@ -138,5 +147,17 @@ const styles = StyleSheet.create({
         color: '#dc2626',
         fontSize: 14,
         fontFamily: 'Roboto',
-    }
+    },
+    footer: {
+        padding: 5,
+        alignItems: 'center',
+    },
+    footerText: {
+        fontFamily: 'Roboto',
+        color: '#666',
+    },
+    linkText: {
+        color: '#6366f1',
+        fontFamily: 'RobotoBold',
+    },
 });
