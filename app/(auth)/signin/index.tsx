@@ -55,11 +55,6 @@ export default function signin(){
     return(
         <KeyboardAvoidingView
         style={styles.container}>
-            <View>
-                <Text>
-                    Este es el login
-                </Text>
-            </View>
             <Card style={styles.card}>
                 <Text style={[styles.cardTitle, { color: colors.text }]}>
                     Iniciar sesión

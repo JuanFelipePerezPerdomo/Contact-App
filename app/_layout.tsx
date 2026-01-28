@@ -9,8 +9,8 @@ export default function RootLayout() {
       <GestureHandlerRootView>
         <Stack screenOptions={{ headerShown: false}}>
           <Stack.Screen name="index"/>
-          <Stack.Screen name="(auth)/signin/index"/>
-          <Stack.Screen name="(auth)/signup/index"/>
+          <Stack.Screen name="(auth)"/>
+          <Stack.Screen name="(roles)"/>
         </Stack>  
       </GestureHandlerRootView>
     </AuthProvider>

@@ -161,7 +161,7 @@ export default function SignUp() {
                     <Text style={styles.footerText}>
                         ¿Ya tienes una cuenta?{' '}
                         <Link href="/signin">
-                            <Text style={styles.linkText}>Iniciar Sesion</Text>
+                            <Text style={styles.linkText}>Inicia Sesion</Text>
                         </Link>
                     </Text>
                 </View>
