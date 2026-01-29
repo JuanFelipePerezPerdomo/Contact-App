@@ -3,16 +3,16 @@ import { Database } from './database.types';
 
 // Solo exportas los types que necesitas
 export type Employee = Database['public']['Tables']['employee']['Row'];
-export type Department = Database['public']['Tables']['deparment']['Row'];
+export type Department = Database['public']['Tables']['department']['Row'];
 export type User = Database['public']['Tables']['user']['Row'];
 
 // Types para insert (sin id, created_at, etc.)
 export type EmployeeInsert = Database['public']['Tables']['employee']['Insert'];
-export type DepartmentInsert = Database['public']['Tables']['deparment']['Insert'];
+export type DepartmentInsert = Database['public']['Tables']['department']['Insert'];
 
 // Types para update (todo opcional)
 export type EmployeeUpdate = Database['public']['Tables']['employee']['Update'];
-export type DepartmentUpdate = Database['public']['Tables']['deparment']['Update'];
+export type DepartmentUpdate = Database['public']['Tables']['department']['Update'];
 
 // Enums
 export type UserRole = Database['public']['Enums']['UserType'];
