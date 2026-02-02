@@ -11,6 +11,24 @@ export default function RootLayout() {
           <Stack.Screen name="index"/>
           <Stack.Screen name="(auth)"/>
           <Stack.Screen name="(roles)"/>
+          <Stack.Screen 
+            name="departments/[id]" 
+            options={{
+                headerShown: true,
+                title:"Departamento",
+                headerBackTitle:"Atras",
+                presentation:"modal",
+            }}
+          />
+          <Stack.Screen 
+            name="employees/[id]"
+            options={{
+                headerShown: true,
+                title:"Empleados",
+                headerBackTitle:"Atras",
+                presentation:"modal"
+            }}
+          />
         </Stack>  
       </GestureHandlerRootView>
     </AuthProvider>

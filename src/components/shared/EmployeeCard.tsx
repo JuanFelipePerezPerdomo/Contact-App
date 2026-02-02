@@ -1,5 +1,3 @@
-// src/components/shared/EmployeeCard.tsx
-
 import { useTheme } from '@/src/hooks';
 import { Employee } from '@/src/types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -26,16 +24,12 @@ export function EmployeeCard({
 }: EmployeeCardProps) {
   const { colors } = useTheme();
 
-  // ========================================
-  // VALIDAR SI ESTÁ EN HORARIO LABORAL
-  // ========================================
   const isWithinWorkingHours = (): boolean => {
     const now = new Date();
     const currentHour = now.getHours();
     const currentMin = now.getMinutes();
     const currentTimeInMinutes = currentHour * 60 + currentMin;
 
-    // Convertir time_in y time_out a minutos
     const [inHour, inMin] = employee.time_in.split(':').map(Number);
     const [outHour, outMin] = employee.time_out.split(':').map(Number);
     
@@ -45,9 +39,7 @@ export function EmployeeCard({
     return currentTimeInMinutes >= workStartInMinutes && currentTimeInMinutes <= workEndInMinutes;
   };
 
-  // ========================================
   // MANEJAR LLAMADA CON VALIDACIÓN
-  // ========================================
   const handleCall = () => {
     if (!employee.phone) return;
 
@@ -149,7 +141,7 @@ export function EmployeeCard({
                 { 
                   backgroundColor: isWithinWorkingHours() 
                     ? colors.primary 
-                    : '#9ca3af' // Gris si no está disponible
+                    : '#9ca3af' 
                 }
               ]}
             >

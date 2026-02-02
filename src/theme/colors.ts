@@ -32,6 +32,7 @@ export const Colors = {
     favorite: "#FFD700",
     icon: "#666666",
     placeholder: "#AAAAAA",
+    card: "#FFFFFF",
   },
 
   dark: {
@@ -63,11 +64,13 @@ export const Colors = {
     favorite: "#FFD700",
     icon: "#AAAAAA",
     placeholder: "#666666",
+    card: "#FFFFFF",
   },
 } as const;
 
 export type ColorScheme = "light" | "dark";
 export type ThemeColors = {
+  card: string | undefined;
   background: string;
   surface: string;
   surfaceVariant: string;

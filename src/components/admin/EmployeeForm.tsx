@@ -1,14 +1,12 @@
 import { Button, Input } from '@/src/components/ui';
 import { useTheme } from '@/src/hooks';
 import { Department, EmployeeInsert, EmployeeUpdate } from '@/src/types';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
-
-import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { z } from 'zod';
-
 
 const employeeSchema = z.object({
   employee_name: z
@@ -66,23 +64,27 @@ const employeeSchema = z.object({
 
 type EmployeeFormData = z.infer<typeof employeeSchema>;
 
-interface EmployeeFormProps {
+interface EmployeeFormProps<T extends EmployeeInsert | EmployeeUpdate> {
   initialData?: EmployeeUpdate;
   departments: Department[];
-  onSubmit: (data: EmployeeInsert | EmployeeUpdate) => Promise<void>;
+  onSubmit: (data: T) => Promise<void>; // 👈 Generic
   onCancel?: () => void;
   isEditing?: boolean;
   preselectedDepartmentId?: number;
+  onSuccess?: (message: string) => void;
+  onError?: (message: string) => void;
 }
 
-export function EmployeeForm({
+export function EmployeeForm<T extends EmployeeInsert | EmployeeUpdate>({
   initialData,
   departments,
   onSubmit,
   onCancel,
   isEditing = false,
   preselectedDepartmentId,
-}: EmployeeFormProps) {
+  onSuccess,
+  onError,
+}: EmployeeFormProps<T>) {
   const { colors } = useTheme();
   const [loading, setLoading] = useState(false);
 
@@ -93,8 +95,8 @@ export function EmployeeForm({
       mail: initialData?.mail || '',
       phone: initialData?.phone || '',
       position: initialData?.position || '',
-      time_in: initialData?.time_in || '09:00', 
-      time_out: initialData?.time_out || '17:00', 
+      time_in: initialData?.time_in || '09:00',
+      time_out: initialData?.time_out || '17:00',
       FK_department_id: initialData?.FK_department_id || preselectedDepartmentId || 0,
     },
   });
@@ -102,19 +104,19 @@ export function EmployeeForm({
   const handleFormSubmit = async (data: EmployeeFormData) => {
     try {
       setLoading(true);
-      await onSubmit(data);
+      await onSubmit(data as T); // 👈 Cast a T
       
-      Alert.alert(
-        'Éxito',
-        isEditing 
-          ? 'Empleado actualizado correctamente' 
-          : 'Empleado creado correctamente'
-      );
+      if (onSuccess) {
+        onSuccess(
+          isEditing 
+            ? 'Empleado actualizado correctamente' 
+            : 'Empleado creado correctamente'
+        );
+      }
     } catch (error) {
-      Alert.alert(
-        'Error',
-        error instanceof Error ? error.message : 'Ocurrió un error'
-      );
+      if (onError) {
+        onError(error instanceof Error ? error.message : 'Ocurrió un error');
+      }
     } finally {
       setLoading(false);
     }
@@ -132,7 +134,7 @@ export function EmployeeForm({
               label="Nombre Completo"
               value={value}
               onChangeText={onChange}
-              placeholder="Ej: John Doe"
+              placeholder="Ej: Juan Pérez"
               error={errors.employee_name?.message}
               autoCapitalize="words"
             />
@@ -148,7 +150,7 @@ export function EmployeeForm({
               label="Correo Electrónico"
               value={value}
               onChangeText={onChange}
-              placeholder="yourmail@company.com"
+              placeholder="juan.perez@empresa.com"
               error={errors.mail?.message}
               autoCapitalize="none"
               keyboardType="email-address"
@@ -187,7 +189,7 @@ export function EmployeeForm({
             />
           )}
         />
-        
+
         {/* Hora de entrada */}
         <Controller
           control={control}
@@ -313,7 +315,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   buttons: {
-    flexDirection: 'row',
     gap: 12,
     marginTop: 8,
   },
