@@ -60,7 +60,7 @@ export default function AdminHomeScreen() {
       label: "Crear Empleado",
       onPress: () => router.push("/(roles)/(admin)/manage/employees/create"),
     },
-    // 👇 NUEVA ACCIÓN DE COMPARTIR
+    
     {
       icon: "share",
       label: "Compartir con Cliente",
