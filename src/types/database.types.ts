@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      client_departments: {
+        Row: {
+          department_data_id: number
+          FK_client_id: string
+          FK_department_id: number
+        }
+        Insert: {
+          department_data_id?: number
+          FK_client_id?: string
+          FK_department_id: number
+        }
+        Update: {
+          department_data_id?: number
+          FK_client_id?: string
+          FK_department_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_departments_data_FK_department_id_fkey"
+            columns: ["FK_department_id"]
+            isOneToOne: true
+            referencedRelation: "department"
+            referencedColumns: ["department_id"]
+          },
+          {
+            foreignKeyName: "user_departments_data_FK_user_id_fkey"
+            columns: ["FK_client_id"]
+            isOneToOne: true
+            referencedRelation: "user"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       department: {
         Row: {
           created_at: string
@@ -79,17 +112,23 @@ export type Database = {
       user: {
         Row: {
           created_at: string
+          user_email: string | null
           user_id: string
+          user_name: string
           user_role: Database["public"]["Enums"]["UserType"]
         }
         Insert: {
           created_at?: string
+          user_email?: string | null
           user_id?: string
+          user_name?: string
           user_role?: Database["public"]["Enums"]["UserType"]
         }
         Update: {
           created_at?: string
+          user_email?: string | null
           user_id?: string
+          user_name?: string
           user_role?: Database["public"]["Enums"]["UserType"]
         }
         Relationships: []
