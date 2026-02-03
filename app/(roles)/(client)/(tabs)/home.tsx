@@ -5,6 +5,7 @@ import { Spacing } from "@/src/theme";
 import { Department } from "@/src/types";
 import { router } from "expo-router";
 import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   const { colors } = useTheme();
@@ -16,15 +17,15 @@ export default function Home() {
 
   if (loading) {
     return (
-      <View style={[styles.container, styles.centered]}>
+      <SafeAreaView style={[styles.container, styles.centered]}>
         <ActivityIndicator size="large" color={colors.primary} />
-      </View>
+      </SafeAreaView>
     );
   }
 
   if (departments.length === 0) {
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <View style={styles.emptyState}>
           <Text style={[styles.emptyTitle, { color: colors.text }]}>
             No hay departamentos disponibles
@@ -33,12 +34,12 @@ export default function Home() {
             Contacta con un administrador
           </Text>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>Directorio</Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
@@ -58,7 +59,7 @@ export default function Home() {
         )}
         contentContainerStyle={styles.list}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
