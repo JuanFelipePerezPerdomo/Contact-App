@@ -5,6 +5,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 
 import { supabase } from "@/src/lib/supabase";
@@ -37,7 +38,7 @@ export default function SignUp() {
             setLoading(true);
             setError(null);
 
-            const { error: signUpError } = await supabase.auth.signUp({
+            const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email: data.email,
                 password: data.password,
                 options: {
@@ -46,6 +47,20 @@ export default function SignUp() {
                     }
                 }
             });
+
+            if ( authData?.user ){
+                const { error: dbError } = await supabase
+                 .from("user")
+                 .upsert({
+                    user_id: authData.user.id,
+                    user_email: data.email,
+                    user_name: data.name,
+                }, {
+                    onConflict: 'user_id'
+                });
+
+                if (dbError) console.error("Error db", "Se guardo en Auth pero no en User");
+            }
 
             if (signUpError) {
                 throw signUpError
@@ -71,106 +86,111 @@ export default function SignUp() {
 
     return(
         <KeyboardAvoidingView style = {styles.container}>
-            
-            <Card style = {styles.card}> 
-                <Text 
-                style={[styles.cardTitle, 
-                { color: colors.text }]}>
-                    Registrarse
-                </Text>
-                <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: {onChange, value}}) => (
-                      <View>
-                          <Input
-                            label="Correo Electronico"
-                            value={value}
-                            onChangeText={onChange}
-                            placeholder="Inserte su correo"
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            keyboardType="email-address"
-                            error={errors.email?.message}
-                          />
-                      </View>  
-                    )}
-                />
-                <Controller
-                    control={control}
-                    name="name"
-                    render={({ field: {onChange, value}}) => (
-                        <View>
-                            <Input
-                                label="Nombre de Usuario"
-                                value={value}
-                                onChangeText={onChange}
-                                placeholder="Inserte su nombre"
-                                autoCapitalize="words"
-                                autoCorrect={false}
-                                error={errors.name?.message}
-                            />
-                        </View>
-                    )}
-                />
-                <Controller
-                    control={control}
-                    name="password"
-                    render={({ field: {onChange, value}}) => (
-                        <View>
-                            <Input
-                                label="Contraseña"
-                                onChangeText={onChange}
-                                placeholder="Inserte su contraseña"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                secureTextEntry
-                                error={errors.password?.message}
-                            />
-                        </View>
-                    )}
-                />
-                <Controller
-                    control={control}
-                    name="confirm"
-                    render={({ field: {onChange, value}}) => (
-                        <View>
-                            <Input
-                                label="Confirmar Contraseña"
-                                value={value}
-                                onChangeText={onChange}
-                                placeholder="Confirme su contraseña"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                secureTextEntry
-                                error={errors.confirm?.message}
-                            />
-                        </View>
-                    )}
-                />
-                <Button
-                    title="Registrarse"
-                    onPress={handleSubmit(onSubmit)}
-                    disabled={loading}
-                    fullWidth
-                    size="medium"
-                />
-                <View 
-                style={styles.footer}
-                >
-                    <Text style={styles.footerText}>
-                        ¿Ya tienes una cuenta?{' '}
-                        <Link href="/signin">
-                            <Text style={styles.linkText}>Inicia Sesion</Text>
-                        </Link>
+            <SafeAreaView style={styles.viewContainer}>
+                <Card style = {styles.card}> 
+                    <Text 
+                    style={[styles.cardTitle, 
+                    { color: colors.text }]}>
+                        Registrarse
                     </Text>
-                </View>
-            </Card>
+                    <Controller
+                        control={control}
+                        name="email"
+                        render={({ field: {onChange, value}}) => (
+                        <View>
+                            <Input
+                                label="Correo Electronico"
+                                value={value}
+                                onChangeText={onChange}
+                                placeholder="Inserte su correo"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                keyboardType="email-address"
+                                error={errors.email?.message}
+                            />
+                        </View>  
+                        )}
+                    />
+                    <Controller
+                        control={control}
+                        name="name"
+                        render={({ field: {onChange, value}}) => (
+                            <View>
+                                <Input
+                                    label="Nombre de Usuario"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Inserte su nombre"
+                                    autoCapitalize="words"
+                                    autoCorrect={false}
+                                    error={errors.name?.message}
+                                />
+                            </View>
+                        )}
+                    />
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({ field: {onChange, value}}) => (
+                            <View>
+                                <Input
+                                    label="Contraseña"
+                                    onChangeText={onChange}
+                                    placeholder="Inserte su contraseña"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    secureTextEntry
+                                    error={errors.password?.message}
+                                />
+                            </View>
+                        )}
+                    />
+                    <Controller
+                        control={control}
+                        name="confirm"
+                        render={({ field: {onChange, value}}) => (
+                            <View>
+                                <Input
+                                    label="Confirmar Contraseña"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Confirme su contraseña"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    secureTextEntry
+                                    error={errors.confirm?.message}
+                                />
+                            </View>
+                        )}
+                    />
+                    <Button
+                        title="Registrarse"
+                        onPress={handleSubmit(onSubmit)}
+                        disabled={loading}
+                        fullWidth
+                        size="medium"
+                    />
+                    <View 
+                    style={styles.footer}
+                    >
+                        <Text style={styles.footerText}>
+                            ¿Ya tienes una cuenta?{' '}
+                            <Link href="/signin">
+                                <Text style={styles.linkText}>Inicia Sesion</Text>
+                            </Link>
+                        </Text>
+                    </View>
+                </Card>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
+    viewContainer: {
+        flex: 1,
+        justifyContent: "flex-start"
+    },
     container: {
         flex: 1
     },

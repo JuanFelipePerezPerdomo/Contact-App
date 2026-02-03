@@ -6,6 +6,7 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { z } from "zod";
 
 import { supabase } from "@/src/lib/supabase";
@@ -55,71 +56,77 @@ export default function signin(){
     return(
         <KeyboardAvoidingView
         style={styles.container}>
-            <Card style={styles.card}>
-                <Text style={[styles.cardTitle, { color: colors.text }]}>
-                    Iniciar sesión
-                </Text>
-
-               <Controller
-                    control={control}
-                    name="email"
-                    render={({ field: { onChange, value } }) => (
-                        <View style={styles.form}>
-                            <Input
-                                label="Correo Electronico"
-                                value={value}
-                                onChangeText={onChange}
-                                placeholder="Inserte su correo"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                keyboardType="email-address"
-                                error={errors.email?.message}
-                            />
-                        </View>
-                        
-                    )}
-                />
-                <Controller
-                    control={control}
-                    name="password"
-                    render={({ field: { onChange, value } }) => (
-                        <View style={styles.form}>
-                            <Input
-                                label="Contraseña"
-                                value={value}
-                                onChangeText={onChange}
-                                placeholder="Inserte su contraseña"
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                secureTextEntry
-                                error={errors.password?.message}
-                            />
-                        </View>
-                    )}
-                />
-
-                <Button
-                    title="Iniciar Sesion"
-                    onPress={handleSubmit(onSubmit)}
-                    disabled={loading}
-                    fullWidth
-                    size="large"
-                />
-                 <View style={styles.footer}>
-                    <Text style={styles.footerText}>
-                    ¿No tienes una cuenta?{' '}
-                    <Link href="/signup">
-                        <Text style={styles.linkText}>Regístrate</Text>
-                    </Link>
+            <SafeAreaView style={styles.viewContainer}>
+                <Card style={styles.card}>
+                    <Text style={[styles.cardTitle, { color: colors.text }]}>
+                        Iniciar sesión
                     </Text>
-                </View>
-            </Card>
+
+                <Controller
+                        control={control}
+                        name="email"
+                        render={({ field: { onChange, value } }) => (
+                            <View style={styles.form}>
+                                <Input
+                                    label="Correo Electronico"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Inserte su correo"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    keyboardType="email-address"
+                                    error={errors.email?.message}
+                                />
+                            </View>
+                            
+                        )}
+                    />
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({ field: { onChange, value } }) => (
+                            <View style={styles.form}>
+                                <Input
+                                    label="Contraseña"
+                                    value={value}
+                                    onChangeText={onChange}
+                                    placeholder="Inserte su contraseña"
+                                    autoCapitalize="none"
+                                    autoCorrect={false}
+                                    secureTextEntry
+                                    error={errors.password?.message}
+                                />
+                            </View>
+                        )}
+                    />
+
+                    <Button
+                        title="Iniciar Sesion"
+                        onPress={handleSubmit(onSubmit)}
+                        disabled={loading}
+                        fullWidth
+                        size="large"
+                    />
+                    <View style={styles.footer}>
+                        <Text style={styles.footerText}>
+                        ¿No tienes una cuenta?{' '}
+                        <Link href="/signup">
+                            <Text style={styles.linkText}>Regístrate</Text>
+                        </Link>
+                        </Text>
+                    </View>
+                </Card>
+            </SafeAreaView>
         </KeyboardAvoidingView>
     );
     
 }
 
 const styles = StyleSheet.create({
+    viewContainer: {
+        flex: 1,
+        justifyContent: "flex-start"
+    },
     container: {
         flex: 1,
     },

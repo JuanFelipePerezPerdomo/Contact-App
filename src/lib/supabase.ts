@@ -1,7 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createClient } from '@supabase/supabase-js';
 import { AppState, Platform } from 'react-native';
-
 {/* Crear un storage personalizado que solo funcione en el cliente
 Este Custom Storages se hizo por incompatibilidad para la version Web
 es una solucion temporal, creo que lo ideal seria hacer carpetas para controlar versiones 
@@ -56,4 +55,3 @@ AppState.addEventListener('change', (state) => {
     supabase.auth.stopAutoRefresh();
   }
 });
-
