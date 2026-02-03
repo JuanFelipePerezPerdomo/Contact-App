@@ -38,7 +38,7 @@ export default function SignUp() {
             setLoading(true);
             setError(null);
 
-            const { error: signUpError } = await supabase.auth.signUp({
+            const { data: authData, error: signUpError } = await supabase.auth.signUp({
                 email: data.email,
                 password: data.password,
                 options: {
@@ -47,6 +47,20 @@ export default function SignUp() {
                     }
                 }
             });
+
+            if ( authData?.user ){
+                const { error: dbError } = await supabase
+                 .from("user")
+                 .upsert({
+                    user_id: authData.user.id,
+                    user_email: data.email,
+                    user_name: data.name,
+                }, {
+                    onConflict: 'user_id'
+                });
+
+                if (dbError) console.error("Error db", "Se guardo en Auth pero no en User");
+            }
 
             if (signUpError) {
                 throw signUpError
