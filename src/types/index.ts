@@ -25,3 +25,7 @@ export type EmployeeWithDepartment = Employee & {
 // Formularios
 export type DepartmentFormData = Omit<Department, 'id' | 'created_at'>;
 export type EmployeeFormData = Omit<Employee, 'id' | 'created_at'>;
+
+// Types no relacionados con la DB:
+export { DEFAULT_SETTINGS } from "./settings";
+export type { Settings, ThemeMode } from "./settings";

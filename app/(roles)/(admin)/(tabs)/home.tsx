@@ -1,4 +1,4 @@
-import { DepartmentCard } from "@/src/components/shared/DepartmentCard";
+import { DepartmentCard } from "@/src/components/shared";
 import { CustomAlert, FABAction, FABMenu } from "@/src/components/ui";
 import { useAlert, useDepartments, useTheme } from "@/src/hooks/";
 import { Spacing } from "@/src/theme";
