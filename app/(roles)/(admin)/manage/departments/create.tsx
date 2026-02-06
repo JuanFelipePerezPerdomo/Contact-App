@@ -1,13 +1,17 @@
 import { DepartmentForm } from "@/src/components/admin/DepartmentForm";
 import { CustomAlert } from "@/src/components/ui/CustomAlert";
-import { useDepartments } from "@/src/hooks";
+import { useDepartments, useTheme } from "@/src/hooks";
 import { useAlert } from "@/src/hooks/useAlert";
 import { Spacing } from "@/src/theme";
 import { DepartmentInsert } from "@/src/types";
 import { router } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CreateDepartmentScreen() {
+
+const { colors } = useTheme();
+
   const { createDepartment } = useDepartments();
   const { alertVisible, alertOptions, showAlert, hideAlert } = useAlert();
 
@@ -37,7 +41,7 @@ export default function CreateDepartmentScreen() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
       {/* 👇 TypeScript infiere correctamente DepartmentInsert */}
       <DepartmentForm<DepartmentInsert>
         onSubmit={handleSubmit}
@@ -53,7 +57,7 @@ export default function CreateDepartmentScreen() {
         buttons={alertOptions.buttons}
         onClose={hideAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

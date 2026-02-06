@@ -7,6 +7,7 @@ import { EmployeeUpdate } from "@/src/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function EditEmployeeScreen() {
   const { colors } = useTheme();
@@ -74,7 +75,7 @@ export default function EditEmployeeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
       {/* 👇 TypeScript infiere correctamente EmployeeUpdate */}
       <EmployeeForm<EmployeeUpdate>
         initialData={initialData}
@@ -93,7 +94,7 @@ export default function EditEmployeeScreen() {
         buttons={alertOptions.buttons}
         onClose={hideAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -68,7 +68,7 @@ export function EmployeeCard({
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: '#ffffff' }]}
+      style={[styles.card, { backgroundColor: colors.card }]}
       onPress={() => onPress?.(employee)}
       activeOpacity={0.7}
     >

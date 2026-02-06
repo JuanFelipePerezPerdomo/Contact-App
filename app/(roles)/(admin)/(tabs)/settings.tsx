@@ -30,7 +30,7 @@ export default function settings(){
     }
 
     return(
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
             <Card style={styles.section}>
                 <Text style={[styles.sectionTitle, {color: colors.text}]}> Tema </Text>
 

@@ -22,7 +22,7 @@ export function DepartmentCard({
 
     return(
         <TouchableOpacity
-            style={[styles.card,{backgroundColor: "#FFFFFF"}]}
+            style={[styles.card,{backgroundColor: colors.card}]}
             onPress={() => onPress?.(department)}
             activeOpacity={0.7}
         >

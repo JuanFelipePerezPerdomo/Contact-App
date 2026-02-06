@@ -1,12 +1,26 @@
+import { useTheme } from "@/src/hooks";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 export default function AdminTabsLayout(){
+
+    const { colors } = useTheme();
+
     return(
         <Tabs
         screenOptions={{
-            tabBarActiveTintColor: '#007AFF',
-            headerShown: false
+            tabBarActiveTintColor: colors.primary,
+            tabBarInactiveTintColor: colors.icon,
+            headerShown: false,
+            tabBarStyle: {
+                backgroundColor: colors.tabs,
+                borderTopColor: colors.border,
+            },
+            headerStyle: {
+                backgroundColor: colors.text,
+            },
+            headerTintColor: colors.text,
+            headerShadowVisible: false,
         }}
         >
             <Tabs.Screen

@@ -7,6 +7,7 @@ import { DepartmentUpdate } from "@/src/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function EditDepartmentScreen() {
   const { colors } = useTheme();
@@ -72,7 +73,7 @@ export default function EditDepartmentScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
       {/* 👇 TypeScript infiere correctamente DepartmentUpdate */}
       <DepartmentForm<DepartmentUpdate>
         initialData={initialData}
@@ -90,7 +91,7 @@ export default function EditDepartmentScreen() {
         buttons={alertOptions.buttons}
         onClose={hideAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 

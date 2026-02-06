@@ -9,7 +9,6 @@ import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, FlatList, StyleSheet, Text, View } from "react-native";
 
-
 export default function DepartmentDetailsScreen() {
     const { colors } = useTheme();
     const { role } = useAuth();
@@ -151,7 +150,7 @@ export default function DepartmentDetailsScreen() {
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
         {/* Header */}
-        <View style={[styles.header, { backgroundColor: colors.card }]}>
+        <View style={[styles.header, { backgroundColor: colors.background }]}>
             <Text style={[styles.title, { color: colors.text }]}>
             {department.department_name}
             </Text>

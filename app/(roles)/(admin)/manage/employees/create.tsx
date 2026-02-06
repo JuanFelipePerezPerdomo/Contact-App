@@ -6,6 +6,7 @@ import { useEmployees } from "@/src/hooks/useEmployees";
 import { EmployeeInsert } from "@/src/types";
 import { router, useLocalSearchParams } from "expo-router";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CreateEmployeeScreen() {
   const { colors } = useTheme();
@@ -49,7 +50,7 @@ export default function CreateEmployeeScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: colors.background}]}>
       {/* 👇 TypeScript infiere correctamente EmployeeInsert */}
       <EmployeeForm<EmployeeInsert>
         departments={departments}
@@ -67,7 +68,7 @@ export default function CreateEmployeeScreen() {
         buttons={alertOptions.buttons}
         onClose={hideAlert}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
